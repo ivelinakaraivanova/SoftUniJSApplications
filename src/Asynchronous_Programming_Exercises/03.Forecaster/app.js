@@ -31,15 +31,25 @@ function attachEvents() {
 
             input.value = '';
 
-            const urlToday = 'http://localhost:3030/jsonstore/forecaster/today/' + locationCode;
-            const responseToday = await fetch(urlToday);
-            const dataToday = await responseToday.json();
+            async function getTodayForecast(locationCode) {
+                const urlToday = 'http://localhost:3030/jsonstore/forecaster/today/' + locationCode;
+                const responseToday = await fetch(urlToday);
+                const dataToday = await responseToday.json();
+                return dataToday;
+            }
 
-            const urlUpcoming = 'http://localhost:3030/jsonstore/forecaster/upcoming/' + locationCode;
-            const responseUpcoming = await fetch(urlUpcoming);
-            const dataUpcoming = await responseUpcoming.json();
+            async function getUpcomingForecats(locationCode) {
+                const urlUpcoming = 'http://localhost:3030/jsonstore/forecaster/upcoming/' + locationCode;
+                const responseUpcoming = await fetch(urlUpcoming);
+                const dataUpcoming = await responseUpcoming.json();
+                return dataUpcoming;
+            }
 
-            const [forecastToday, forecastUpcoming] = await Promise.all([dataToday, dataUpcoming])
+            const [forecastToday, forecastUpcoming] =
+                await Promise.all([
+                    getTodayForecast(locationCode),
+                    getUpcomingForecats(locationCode)
+                ]);
 
             forecast.style.display = 'block';
 
@@ -64,7 +74,7 @@ function attachEvents() {
                     e('span', { className: 'forecast-data' }, forecastToday.forecast.condition)
                 )
             );
-            
+
             divCurrent.appendChild(divToday);
 
             const divThreeDays = e('div', { className: 'forecast-info' }, forecastUpcoming.forecast.map(day => {
@@ -77,7 +87,7 @@ function attachEvents() {
             }));
 
             divUpcoming.appendChild(divThreeDays);
-            
+
             divError.style.display = 'none';
             divCurrent.style.display = 'block';
             divUpcoming.style.display = 'block';
