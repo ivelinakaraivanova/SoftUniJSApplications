@@ -18,30 +18,30 @@ async function solve() {
     })
 
     divExample.style.display = 'none';
+}
 
-    function toggle() {
-        const extra = this.parentNode.nextSibling;
-        extra.style.display = extra.style.display !== 'block' ? 'block' : 'none';
-        this.textContent = this.textContent === 'More' ? 'Less' : 'More';
-    }
+async function getArticles() {
+    const url = 'http://localhost:3030/jsonstore/advanced/articles/list';
 
-    async function getArticles() {
-        const url = 'http://localhost:3030/jsonstore/advanced/articles/list';
+    const response = await fetch(url);
+    const articles = await response.json();
 
-        const response = await fetch(url);
-        const articles = await response.json();
+    return articles;
+}
 
-        return articles;
-    }
+async function getArticleInfo(id) {
+    const url = 'http://localhost:3030/jsonstore/advanced/articles/details/' + id;
 
-    async function getArticleInfo(id) {
-        const url = 'http://localhost:3030/jsonstore/advanced/articles/details/' + id;
+    const response = await fetch(url);
+    const articleData = await response.json();
 
-        const response = await fetch(url);
-        const articleData = await response.json();
+    return articleData;
+}
 
-        return articleData;
-    }
+function toggle() {
+    const extra = this.parentNode.nextSibling;
+    extra.style.display = extra.style.display !== 'block' ? 'block' : 'none';
+    this.textContent = this.textContent === 'More' ? 'Less' : 'More';
 }
 
 function e(type, attributes, ...content) {

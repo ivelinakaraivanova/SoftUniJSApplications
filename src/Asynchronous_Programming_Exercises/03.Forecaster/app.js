@@ -31,20 +31,6 @@ function attachEvents() {
 
             input.value = '';
 
-            async function getTodayForecast(locationCode) {
-                const urlToday = 'http://localhost:3030/jsonstore/forecaster/today/' + locationCode;
-                const responseToday = await fetch(urlToday);
-                const dataToday = await responseToday.json();
-                return dataToday;
-            }
-
-            async function getUpcomingForecats(locationCode) {
-                const urlUpcoming = 'http://localhost:3030/jsonstore/forecaster/upcoming/' + locationCode;
-                const responseUpcoming = await fetch(urlUpcoming);
-                const dataUpcoming = await responseUpcoming.json();
-                return dataUpcoming;
-            }
-
             const [forecastToday, forecastUpcoming] =
                 await Promise.all([
                     getTodayForecast(locationCode),
@@ -102,6 +88,19 @@ function attachEvents() {
     }
 }
 
+async function getTodayForecast(locationCode) {
+    const urlToday = 'http://localhost:3030/jsonstore/forecaster/today/' + locationCode;
+    const responseToday = await fetch(urlToday);
+    const dataToday = await responseToday.json();
+    return dataToday;
+}
+
+async function getUpcomingForecats(locationCode) {
+    const urlUpcoming = 'http://localhost:3030/jsonstore/forecaster/upcoming/' + locationCode;
+    const responseUpcoming = await fetch(urlUpcoming);
+    const dataUpcoming = await responseUpcoming.json();
+    return dataUpcoming;
+}
 
 function e(type, attributes, ...content) {
     const result = document.createElement(type);

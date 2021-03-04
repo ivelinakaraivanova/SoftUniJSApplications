@@ -1,20 +1,24 @@
-async function attachEvents() {
+function attachEvents() {
 
     const btnLoad = document.getElementById('btnLoadPosts');
     const selectPosts = document.getElementById('posts');
-    const posts = await getPosts();
     const btnView = document.getElementById('btnViewPost');
     const postTitle = document.getElementById('post-title');
     const ulPostBody = document.getElementById('post-body');
     const ulPostComments = document.getElementById('post-comments');
-        
-    btnLoad.addEventListener('click', () => {
-        Object.values(posts).forEach(p => {
-            const option = document.createElement('option');
-            option.value = p.id;
-            option.textContent = p.title;
-            selectPosts.appendChild(option);
-        });
+
+    let posts;
+
+    btnLoad.addEventListener('click', async () => {
+        if (posts === undefined) {
+            posts = await getPosts();
+            Object.values(posts).forEach(p => {
+                const option = document.createElement('option');
+                option.value = p.id;
+                option.textContent = p.title;
+                selectPosts.appendChild(option);
+            });
+        }
     })
 
     btnView.addEventListener('click', async () => {
@@ -22,7 +26,7 @@ async function attachEvents() {
         if (ulPostComments.children.length > 0) {
             ulPostComments.innerHTML = '';
         }
-        
+
         if (!selectPosts.options[selectPosts.selectedIndex]) {
             return;
         }
