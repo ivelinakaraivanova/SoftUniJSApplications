@@ -25,7 +25,7 @@ async function loadBooks() {
     };
 
     const books = await getBooks();
-    console.log(Object.entries(books))
+    
     Object.entries(books).map(([bId, b]) => {
         
         const trElement = e('tr', { id: bId },

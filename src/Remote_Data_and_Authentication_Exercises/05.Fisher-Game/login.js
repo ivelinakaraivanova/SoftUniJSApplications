@@ -1,8 +1,7 @@
 function mainLogin() {
     
     const [formRegister, formLogin] = document.querySelectorAll('main form');
-    console.log(formLogin, formRegister);
-
+    
     formLogin.addEventListener('submit', onLoginSubmit);
     formRegister.addEventListener('submit', onRegisterSubmit);
 }
@@ -30,9 +29,10 @@ async function onLoginSubmit(event) {
     }
 
     const data = await response.json();
+    console.log(data)
     sessionStorage.setItem('userToken', data.accessToken);
     sessionStorage.setItem('userId', data._id);
-    window.location.pathname = '/index.html';
+    window.location.pathname = './index.html';
 }
 
 async function onRegisterSubmit(event) {
@@ -63,5 +63,5 @@ async function onRegisterSubmit(event) {
     const data = await response.json();
     sessionStorage.setItem('userToken', data.accessToken);
     sessionStorage.setItem('userId', data._id);
-    window.location.pathname = '/index.html';
+    window.location.pathname = './index.html';
 }
