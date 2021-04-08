@@ -25,11 +25,11 @@ export function setupCreate(section, navigation) {
         }
 
         if (idea.description.length < 10) {
-            return alert('Idea title must be at least 10 characters long!');
+            return alert('Idea description must be at least 10 characters long!');
         }
 
         if (idea.img.length < 5) {
-            return alert('Idea title must be at least 5 characters long!');
+            return alert('Idea image must be at least 5 characters long!');
         }
 
         await createIdea(idea);
